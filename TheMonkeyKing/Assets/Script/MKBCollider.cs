@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class DamageData {
+    public float damage;
+    public float normal;
+}
+
 public class MKBCollider : MonoBehaviour {
 
     public bool canHit = false;
@@ -23,11 +28,15 @@ public class MKBCollider : MonoBehaviour {
         // Debug.Log(other);
         // other.SendMessage("OnHit", 2.5f, SendMessageOptions.DontRequireReceiver);
         if (attackType == 0) {
-            other.SendMessage("OnHit", 2.5f, SendMessageOptions.DontRequireReceiver);
+            other.SendMessage("OnHit", new DamageData() {
+                damage = 2.5f
+            }, SendMessageOptions.DontRequireReceiver);
 
         }
         else {
-            other.SendMessage("OnStrongHit", 3.0f, SendMessageOptions.DontRequireReceiver);
+            other.SendMessage("OnStrongHit", new DamageData() {
+                damage = 3.0f
+            }, SendMessageOptions.DontRequireReceiver);
         }
     }
 

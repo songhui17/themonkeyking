@@ -17,6 +17,9 @@ public class Unit : MonoBehaviour {
     [Header("Constant Force")]
     public Vector3 constantForce;
 
+    [Header("Directional Force")]
+    public float forceValue = 1.0f;
+
     void Start() {
     }
 
@@ -52,10 +55,10 @@ public class Unit : MonoBehaviour {
         animator.SetBool("isDead", IsDead());
     }
 
-    public void OnHit(float damage=2.5f) {
+    public void OnHit(DamageData damage) {
         if (!CanBeHit()) { return; }
 
-        ApplyDamage(damage);
+        ApplyDamage(damage.damage);
         if (IsDead()) {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die")) {
                 animator.SetTrigger("die");
@@ -66,10 +69,10 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public void OnStrongHit(float damage=3.0f) {
+    public void OnStrongHit(DamageData damage) {
         if (!CanBeHit()) { return; }
 
-        ApplyDamage(damage);
+        ApplyDamage(damage.damage);
         HitFly();
     }
 
