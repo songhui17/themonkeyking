@@ -140,7 +140,15 @@ public class PlayerInput : MonoBehaviour {
         // }
     }
 
+    private bool CanAttack() {
+        // bool inAttackStrong = animator.GetCurrentAnimatorStateInfo(0).IsName("AttackStrong");
+        // return !inAttackStrong;
+        return true;
+    }
+
     public void OnAttackButton() {
+        if (!CanAttack()) { return; }
+
         animator.SetTrigger("attack");
         animator.SetInteger("attackCount", Mathf.Max(animator.GetInteger("attackCount"), 0) + 1);
 

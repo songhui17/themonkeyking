@@ -118,6 +118,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc4786648322a7478978b97bfcd2d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114484275909178892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9658bcf3641ceba4cad3c299dcdd92f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114900849092701908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1393,7 +1404,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101426481494839332}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114484275909178892}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1815,7 +1827,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Walk
-  m_Speed: 1.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101499079229420288}
