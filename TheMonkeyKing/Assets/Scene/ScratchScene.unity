@@ -135,7 +135,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &12433107
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &26935079
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -401,7 +401,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &77957915
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -457,7 +457,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &322648117
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1042,7 +1042,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &826826438
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1613,7 +1613,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &1165658900
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1664,7 +1664,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &1168011049
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1726,7 +1726,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &1222463286
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1782,7 +1782,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &1224341920
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2495,7 +2495,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &1853215675
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2621,7 +2621,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &1902348827
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2742,7 +2742,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   constForce: {x: 0, y: 300, z: 300}
-  forceValue: 1
+  forceValue: 500
 --- !u!136 &2110817567
 CapsuleCollider:
   m_ObjectHideFlags: 0

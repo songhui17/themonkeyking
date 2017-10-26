@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageData {
     public float damage;
-    public float normal;
+    public Vector3 normal;
 }
 
 public class MKBCollider : MonoBehaviour {
@@ -27,15 +27,19 @@ public class MKBCollider : MonoBehaviour {
         if (!canHit) { return; }
         // Debug.Log(other);
         // other.SendMessage("OnHit", 2.5f, SendMessageOptions.DontRequireReceiver);
+        var normal = other.transform.position - transform.position;
+        normal.Normalize();
+        normal.y = 0.5f;
         if (attackType == 0) {
             other.SendMessage("OnHit", new DamageData() {
-                damage = 2.5f
+                damage = 2.5f,
+                normal = normal
             }, SendMessageOptions.DontRequireReceiver);
-
         }
         else {
             other.SendMessage("OnStrongHit", new DamageData() {
-                damage = 3.0f
+                damage = 3.0f,
+                normal = normal
             }, SendMessageOptions.DontRequireReceiver);
         }
     }

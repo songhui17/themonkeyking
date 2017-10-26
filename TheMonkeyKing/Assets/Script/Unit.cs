@@ -83,7 +83,7 @@ public class Unit : MonoBehaviour {
         if (!CanBeHit()) { return; }
 
         ApplyDamage(damage.damage);
-        HitFly();
+        HitFly(damage.normal);
     }
 
     public void AddForce(Vector3 force) {
@@ -95,11 +95,18 @@ public class Unit : MonoBehaviour {
         return constForce;
     }
 
-    [ContextMenu("HitFly")]
-    public void HitFly() {
+    [ContextMenu("ConstantHitFly")]
+    public void ConstantHitFly() {
         animator.SetTrigger("hitFly");
 
         SwitchToRigid();
         AddForce(GetConstantForce());
+    }
+
+    public void HitFly(Vector3 direction) {
+        animator.SetTrigger("hitFly");
+
+        SwitchToRigid();
+        AddForce(direction.normalized * forceValue);
     }
 }
