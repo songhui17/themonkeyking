@@ -45,6 +45,10 @@ public class PlayerInput : MonoBehaviour {
     public float speed = 1.0f;
     public float angularClampSpeed = 1.0f;
     public float walkAnimationSpeedMultiplier = 1.0f;
+    public float angularClampSpeedOnAttack = 0.5f;
+
+    [Header("Movement Impl3")]
+    public Transform cameraTransform;
 
     // 角色属性
     public float attackSpeed = 1.0f;
@@ -57,6 +61,7 @@ public class PlayerInput : MonoBehaviour {
     }
     public MovementState movementState = MovementState.Run;
     public Vector3 velocity;
+    public Vector3 localVelocity;  // 上一次摇杆输入
 
     public float maxJumpingSpeed = 1f;
     public float jumpAcc = -0.1f;
@@ -111,7 +116,7 @@ public class PlayerInput : MonoBehaviour {
         movementState = MovementState.Jump;
     }
 
-    void UpdateJump() {
+    void UpdateJumpIml1() {
         var v = jumpingSpeed + Time.deltaTime * jumpAcc;
         var upDelta = Vector3.up * (v + jumpingSpeed) / 2 * Time.deltaTime;
         var horizontalDelta = velocity * Time.deltaTime;
@@ -119,6 +124,34 @@ public class PlayerInput : MonoBehaviour {
 
         animator.SetFloat("speed", 0.2f);  // 待办：跳跃和飞行动作
         jumpingSpeed = v;
+    }
+
+    Vector3 GetHorizontalJumpVelocity() {
+        var v = localVelocity;
+        v = GetCameraMatrix(cameraTransform).MultiplyVector(v);
+        v.y = 0;
+        v.Normalize();
+        v *= speed;
+        return v;
+    }
+
+    void UpdateJumpImpl3() {
+        var v = jumpingSpeed + Time.deltaTime * jumpAcc;
+        var upDelta = Vector3.up * (v + jumpingSpeed) / 2 * Time.deltaTime;
+        var velocity = GetHorizontalJumpVelocity();
+        var horizontalDelta = velocity * Time.deltaTime;
+        controller.Move(upDelta + horizontalDelta);
+
+        animator.SetFloat("speed", 0.2f);  // 待办：跳跃和飞行动作
+        jumpingSpeed = v;
+
+        // 跳跃是同样转向
+        var targetRotation = Quaternion.LookRotation(velocity, Vector3.up);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * angularClampSpeed);
+    }
+
+    void UpdateJump() {
+        UpdateJumpImpl3();
     }
 
     void UpdateRunImpl(float horizontalAxis, float verticalAxis) {
@@ -131,16 +164,18 @@ public class PlayerInput : MonoBehaviour {
         animator.SetFloat("speed", v.magnitude);
     }
 
-    // 固定速度向摇杆方向移动
-    void UpdateRunImpl2(float horizontalAxis, float verticalAxis, bool updatePosition=true) {
-        // var horizontalAxis = Input.GetAxis("Horizontal");
-        // var verticalAxis = Input.GetAxis("Vertical");
-
+    void DoUpdateRunImpl23(float horizontalAxis, float verticalAxis, Matrix4x4 matrix, float angularClampSpeed, bool updatePosition=true) {
         var v = new Vector3(horizontalAxis, 0, verticalAxis);
         if (v.sqrMagnitude * speed * speed < 0.001f) { // speed < 0.1f
             animator.SetFloat("speed", 0.0f);
+            localVelocity = Vector3.zero;
         }
         else {
+            localVelocity = v;
+
+            v = matrix.MultiplyVector(v);
+            v.Normalize();
+
             v *= speed;
             velocity = v;
 
@@ -156,8 +191,40 @@ public class PlayerInput : MonoBehaviour {
         }
     }
 
-    void UpdateRun(float horizontalAxis, float verticalAxis, bool updatePosition=true) {
-        UpdateRunImpl2(horizontalAxis, verticalAxis, updatePosition);
+    // 固定速度向摇杆方向移动
+    void UpdateRunImpl2(float horizontalAxis, float verticalAxis, bool updatePosition=true) {
+        DoUpdateRunImpl23(horizontalAxis, verticalAxis, Matrix4x4.identity, angularClampSpeed, updatePosition:updatePosition);
+    }
+
+    Matrix4x4 GetCameraMatrix(Transform camera) {
+        var forward = camera.forward;
+        var up = Vector3.up;
+        var right = Vector3.Cross(up, forward);
+        right.Normalize();
+        if (right == Vector3.zero) {
+            // 垂直朝向，站在原地吧
+            return Matrix4x4.zero;
+        }
+        else {
+            forward = Vector3.Cross(right, up);
+            forward.Normalize();
+            Matrix4x4 matrix = new Matrix4x4();
+            matrix.SetColumn(0, right);
+            matrix.SetColumn(1, up);
+            matrix.SetColumn(2, forward);
+            // Debug.LogFormat("forward:{0}, right:{1}, up:{2}", forward, right, up);
+            // Debug.Log(matrix);
+            return matrix;
+        }
+    }
+
+    void UpdateRunImpl3(float horizontalAxis, float verticalAxis, float angularClampSpeed, bool updatePosition=true) {
+        DoUpdateRunImpl23(horizontalAxis, verticalAxis, GetCameraMatrix(cameraTransform), angularClampSpeed, updatePosition:updatePosition);
+    }
+
+    void UpdateRun(float horizontalAxis, float verticalAxis, float angularClampSpeed, bool updatePosition=true) {
+        // UpdateRunImpl2(horizontalAxis, verticalAxis, updatePosition);
+        UpdateRunImpl3(horizontalAxis, verticalAxis, angularClampSpeed, updatePosition);
     }
 
     void UpdateMovement(float horizontalAxis, float verticalAxis) {
@@ -168,7 +235,7 @@ public class PlayerInput : MonoBehaviour {
                 UpdateJump();
             }
             else {
-                UpdateRun(horizontalAxis, verticalAxis);
+                UpdateRun(horizontalAxis, verticalAxis, angularClampSpeed);
             }
         }
         else if (movementState == MovementState.Jump) {
@@ -187,7 +254,7 @@ public class PlayerInput : MonoBehaviour {
         }
         else {
             if (animatorState == AnimatorState.Attack && movementState == MovementState.Run) {
-                UpdateRun(horizontalAxis, verticalAxis, updatePosition:false);
+                UpdateRun(horizontalAxis, verticalAxis, angularClampSpeedOnAttack, updatePosition:false);
             }
         }
     }
