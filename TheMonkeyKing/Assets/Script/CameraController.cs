@@ -3,26 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    public Transform Target;
+    private Transform _target;
     private Vector3 _offset;
 
     [Header("Follow Impl2")]
-    public Animator targetAnimator;
+    private Animator _targetAnimator;
     public float angularClampSpeed = 1.0f;
     public Vector3 rotationPivot = Vector3.zero;
     private float horizontalDistance = 0;
     private float verticalDistance = 0;
 
     void Start() {
-        _offset = Target.position - transform.position;
+        var player = GameObject.FindWithTag("Player");
+        _target = player.transform;
+
+        _offset = _target.position - transform.position;
         StartImpl2();
     }
 
     void KeepOffset() {
-        transform.position = Target.position - _offset;
+        transform.position = _target.position - _offset;
     }
 
     void StartImpl2() {
+        _targetAnimator = _target.GetComponent<Animator>();
         verticalDistance = _offset.y;
         _offset.y = 0;
         horizontalDistance = _offset.magnitude;
@@ -34,8 +38,8 @@ public class CameraController : MonoBehaviour {
     }
 
     bool CanRotate() {
-        if (targetAnimator == null || targetAnimator.GetCurrentAnimatorStateInfo(0).IsName("Walk") ||
-            (targetAnimator.IsInTransition(0) && targetAnimator.GetNextAnimatorStateInfo(0).IsName("Walk"))) {
+        if (_targetAnimator == null || _targetAnimator.GetCurrentAnimatorStateInfo(0).IsName("Walk") ||
+            (_targetAnimator.IsInTransition(0) && _targetAnimator.GetNextAnimatorStateInfo(0).IsName("Walk"))) {
             return true;
         }
         else {
@@ -43,7 +47,7 @@ public class CameraController : MonoBehaviour {
         }
     }
     void FollowImpl2() {
-        var v2Target = Target.TransformPoint(rotationPivot) - transform.position;
+        var v2Target = _target.TransformPoint(rotationPivot) - transform.position;
         v2Target.Normalize();
         if (v2Target == Vector3.zero) {
             return;
@@ -52,7 +56,7 @@ public class CameraController : MonoBehaviour {
         newOffset.Normalize();
         newOffset *= horizontalDistance;
         newOffset.y = verticalDistance;
-        transform.position = Target.position - newOffset;
+        transform.position = _target.position - newOffset;
 
         if (CanRotate()) {
             // 朝向时目标居中
@@ -62,7 +66,7 @@ public class CameraController : MonoBehaviour {
     }
 
     void LateUpdate() {
-        if (Target == null) {
+        if (_target == null) {
             return;
         }
 

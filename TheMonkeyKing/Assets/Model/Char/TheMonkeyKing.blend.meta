@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3f42b0b5710066047835868bc3fc6490
-timeCreated: 1508924614
+timeCreated: 1509006285
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -27,6 +27,7 @@ ModelImporter:
     100038: Pivot
     100040: PivotShape
     100042: Bone_003_R
+    100044: Hand_R
     400000: Armature
     400002: Body_001
     400004: Bone_001_L
@@ -49,6 +50,7 @@ ModelImporter:
     400038: Pivot
     400040: PivotShape
     400042: Bone_003_R
+    400044: Hand_R
     2300000: KneeShape
     2300002: PivotShape
     3300000: KneeShape
@@ -71,6 +73,7 @@ ModelImporter:
     7400022: HitFly
     7400024: Die
     7400026: AttackStrong
+    7400028: Walk2_NoRoot
     9500000: //RootNode
     13700000: Body_001
     13700002: Cube
@@ -114,7 +117,7 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths:
-    - Armature/Root/Pivot/Spline/Spline_001/Bone_001_R/Bone_002_R/Bone_003_R
+    - Armature/Root/Pivot/Spline/Spline_001/Arm_001_R/Arm_002_R/Hand_R
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
@@ -467,13 +470,41 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.6166965
+      - time: 0.60805094
         functionName: OnEventEndAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walk2_NoRoot
+      takeName: Walk2_NoRoot
+      firstFrame: -1
+      lastFrame: 17
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

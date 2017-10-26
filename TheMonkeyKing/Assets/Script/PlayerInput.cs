@@ -30,8 +30,8 @@ using UnityEngine;
 
 
 public class PlayerInput : MonoBehaviour {
-    public Animator animator;
-    public CharacterController controller;
+    private Animator animator;
+    private CharacterController controller;
 
     public const string IDLE_NAME = "Idle";
     public const string WALK_NAME = "Walk";
@@ -88,6 +88,9 @@ public class PlayerInput : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        animator = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
+
         InitAnimatorState();
         InitMovementState();
     }

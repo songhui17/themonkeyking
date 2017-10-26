@@ -21,6 +21,7 @@ public class Unit : MonoBehaviour {
     public float forceValue = 1.0f;
 
     void Start() {
+        SwitchToKinematic();
     }
 
     // // 需要处理击飞
@@ -32,6 +33,7 @@ public class Unit : MonoBehaviour {
         // Debug.LogFormat("1<<layer:{0}, &:{1}", 1 << collision.gameObject.layer, (1 << collision.gameObject.layer) & groundLayer);
         bool isTargetLayer = ((1 << collision.gameObject.layer) & groundLayer) != 0;
         if (isTargetLayer && stateInfo.IsName("HitFly")) {
+            SwitchToKinematic();
             if (!IsDead()) {
                 animator.SetTrigger("idle");
             }
@@ -40,6 +42,14 @@ public class Unit : MonoBehaviour {
 
     void Update() {
 
+    }
+
+    void SwitchToKinematic() {
+        GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    void SwitchToRigid() {
+        GetComponent<Rigidbody>().isKinematic = false;
     }
 
     private bool IsDead() {
@@ -88,6 +98,8 @@ public class Unit : MonoBehaviour {
     [ContextMenu("HitFly")]
     public void HitFly() {
         animator.SetTrigger("hitFly");
+
+        SwitchToRigid();
         AddForce(GetConstantForce());
     }
 }

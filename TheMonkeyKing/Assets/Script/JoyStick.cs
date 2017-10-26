@@ -14,10 +14,11 @@ public class JoyStick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     public Transform aimingCircle;
 
     // 直接引用玩家
-    public PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     void Start() {
-
+        var player = GameObject.FindWithTag("Player");
+        playerInput = player.GetComponent<PlayerInput>();
     }
 
     void UpdateJoystick(Vector3 localVector) {
