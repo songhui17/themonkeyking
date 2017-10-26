@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour {
     public Animator animator;
-    public Rigidbody rigidbody;
+    // public Rigidbody rigidbody;
     
     public LayerMask groundLayer = -1;
 
@@ -15,7 +15,7 @@ public class Unit : MonoBehaviour {
 
     // 固定力
     [Header("Constant Force")]
-    public Vector3 constantForce;
+    public Vector3 constForce;
 
     [Header("Directional Force")]
     public float forceValue = 1.0f;
@@ -77,12 +77,12 @@ public class Unit : MonoBehaviour {
     }
 
     public void AddForce(Vector3 force) {
-        if (rigidbody == null) { return; }
-        rigidbody.AddForce(force);
+        if (GetComponent<Rigidbody>() == null) { return; }
+        GetComponent<Rigidbody>().AddForce(force);
     }
 
     public Vector3 GetConstantForce() {
-        return constantForce;
+        return constForce;
     }
 
     [ContextMenu("HitFly")]
